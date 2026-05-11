@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles & Hyperrealistic Background */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', sans-serif;
+            background: radial-gradient(circle at center, #1a0b2e 0%, #000000 100%);
+            color: #fff;
+            overflow: hidden;
+            height: 200vh;
+            width: 200vw;
+        }
+
+        /* Falling Objects Container */
+        #falling-objects {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .falling-object {
+            position: absolute;
+            top: -10vh;
+            font-size: 2.5rem;
+            filter: drop-shadow(0px 5px 15px rgba(255, 105, 180, 0.6));
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Slide Containers */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+            z-index: 10;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.2);
+            max-width: 90%;
+        }
+
+        /* Typography */
+        h1.realistic-heading {
+            font-family: 'Great Vibes', cursive;
+            font-size: 6rem;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8b, #ffb3b3);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(255, 107, 107, 0.5));
+            animation: pulse 2s infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        @keyframes pulse {
+            0% { filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.4)); transform: scale(1); }
+            100% { filter: drop-shadow(0 0 30px rgba(255, 107, 107, 0.8)); transform: scale(1.02); }
+        }
+
+        p.quote {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        /* Buttons - 3D Realistic Style */
+        /* --- Buttons - Floating 3D Realistic Style --- */
+        /* --- Buttons - Glorious & Sparkling Style --- */
+        .btn {
+            position: relative;
+            overflow: hidden; /* Keeps the sparkle inside the button */
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #fff;
+            /* Glorious glowing gradient that shifts */
+            background: linear-gradient(45deg, #ff416c, #ff758c, #ff416c, #ff758c);
+            background-size: 300% auto;
+            border: 1px solid #ffb3c6;
+            border-radius: 50px;
+            cursor: pointer;
+            /* Magical glowing 3D shadow */
+            box-shadow: 0 6px 0 #c92a4b, 0 15px 25px rgba(255, 65, 108, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.6);
+            margin: 10px;
+            font-family: 'Montserrat', sans-serif;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+            
+            /* Floating and shifting animations */
+            animation: floatButton 3s ease-in-out infinite, gradientShift 4s linear infinite;
+            transition: all 0.2s ease;
+        }
+
+        /* ✨ The Sparkling Sweep Effect ✨ */
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            /* A beam of pure white light */
+            background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0) 100%);
+            transform: skewX(-25deg);
+            animation: sparkleSweep 2.5s infinite;
+        }
+
+        @keyframes sparkleSweep {
+            0% { left: -100%; }
+            20% { left: 200%; } /* Sweeps across quickly */
+            100% { left: 200%; } /* Pauses before sweeping again */
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% center; }
+            100% { background-position: 300% center; }
+        }
+
+        /* The gentle floating motion */
+        @keyframes floatButton {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* The pressed down state */
+        .btn:active {
+            animation: none; 
+            transform: translateY(6px) !important; 
+            box-shadow: 0 0 0 #c92a4b, 0 2px 5px rgba(255, 65, 108, 0.4), inset 0 2px 5px rgba(0,0,0,0.4) !important;
+            filter: brightness(0.9);
+        }
+
+        /* Make the NO button exactly the same design! 
+           Because it already has the "btn" class in the HTML, 
+           we just tell it to delay its floating and sparkling so it bobs separately.
+        */
+        .btn-outline {
+            background: linear-gradient(45deg, #ff416c, #ff758c, #ff416c, #ff758c);
+            background-size: 300% auto;
+            border: 1px solid #ffb3c6;
+            color: #fff;
+            box-shadow: 0 6px 0 #c92a4b, 0 15px 25px rgba(255, 65, 108, 0.6), inset 0 2px 5px rgba(255, 255, 255, 0.6);
+            animation-delay: 0.5s; 
+        }
+
+        .btn-outline::after {
+            animation-delay: 0.5s; /* Syncs the sparkle delay */
+        }
+
+        /* Moving Photos Carousel */
+        /* --- NEW 3D Carousel & Flip Cards --- */
+        .carousel-container {
+            perspective: 1000px;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .carousel {
+            width: 250px;
+            height: 350px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotateCarousel 20s infinite linear;
+        }
+
+        /* Pauses the circle when hovered/clicked so she can read it */
+        .carousel:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes rotateCarousel {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
+
+        .flip-card {
+            position: absolute;
+            width: 250px;
+            height: 350px;
+            cursor: pointer;
+        }
+
+        /* Positioning the 4 cards in a 3D circle */
+        /* Positioning the 6 cards in a 3D circle (60 degrees apart) */
+        .flip-card:nth-child(1) { transform: rotateY(0deg) translateZ(300px); }
+        .flip-card:nth-child(2) { transform: rotateY(60deg) translateZ(300px); }
+        .flip-card:nth-child(3) { transform: rotateY(120deg) translateZ(300px); }
+        .flip-card:nth-child(4) { transform: rotateY(180deg) translateZ(300px); }
+        .flip-card:nth-child(5) { transform: rotateY(240deg) translateZ(300px); }
+        .flip-card:nth-child(6) { transform: rotateY(300deg) translateZ(300px); }
+
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+
+        /* This class is added by JS when clicked */
+        .flip-card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .flip-card-front {
+            background-size: cover;
+            background-position: center;
+        }
+
+        .flip-card-back {
+            background: rgba(255, 65, 108, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            color: #fff;
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-size: 1.8rem;
+            font-family: 'Great Vibes', cursive;
+            line-height: 1.4;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+        }
+        /* --- CANDLE SLIDE (Hyper-Realistic) --- */
+        .candle-container {
+            position: relative;
+            width: 100px;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        /* The 3D Wax Body */
+        .candle {
+            position: relative;
+            width: 70px;
+            height: 180px;
+            background: linear-gradient(to right, #e8c6b5 0%, #fff0e8 30%, #fff0e8 70%, #d8b09d 100%);
+            border-radius: 5px 5px 8px 8px;
+            box-shadow: inset 0 -15px 20px rgba(0,0,0,0.2), 0 10px 20px rgba(0,0,0,0.5);
+        }
+        
+        /* Realistic melted wax top */
+        .candle::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: radial-gradient(ellipse at center, #d8b09d 0%, #fff0e8 60%);
+            border-radius: 50%;
+        }
+
+        .wick {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 15px;
+            background: linear-gradient(to bottom, #111 0%, #333 50%, #888 100%);
+            border-radius: 2px 2px 0 0;
+        }
+
+        /* The Glowing Flame */
+        .flame {
+            position: absolute;
+            top: -75px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 60px;
+            background: radial-gradient(ellipse at bottom, #fff 10%, #ffeb3b 40%, #ff9800 80%, transparent 100%);
+            border-radius: 50% 50% 20% 20% / 60% 60% 40% 40%;
+            box-shadow: 0 0 20px #ffeb3b, 0 0 50px #ff9800, 0 0 80px #ff5722;
+            animation: flicker 0.1s infinite alternate, sway 2s ease-in-out infinite alternate;
+            cursor: pointer;
+            z-index: 5;
+            transition: all 0.3s ease;
+        }
+
+        .candle-glow {
+            position: absolute;
+            top: -80px;
+            width: 250px;
+            height: 250px;
+            background: radial-gradient(circle, rgba(255, 152, 0, 0.4) 0%, transparent 70%);
+            animation: pulseGlow 2s infinite alternate;
+            pointer-events: none; /* THIS IS CRITICAL - IT LETS CLICKS PASS THROUGH */
+            z-index: 1;
+        }   
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) skewX(2deg); opacity: 0.9; }
+            100% { transform: translateX(-50%) scale(1.05) skewX(-2deg); opacity: 1; }
+        }
+        @keyframes sway {
+            0% { margin-left: -2px; }
+            100% { margin-left: 2px; }
+        }
+        @keyframes pulseGlow {
+            0% { transform: scale(0.9); opacity: 0.7; }
+            100% { transform: scale(1.1); opacity: 1; }
+        }
+
+        /* The Smoke Trail */
+        /* --- UPGRADED REALISTIC SMOKE & CLICK BOX --- */
+        /* This creates a huge invisible, clickable box around the flame */
+        .flame::after {
+            content: '';
+            position: absolute;
+            top: -30px; left: -30px; right: -30px; bottom: -30px;
+            cursor: pointer;
+        }
+
+        /* The new multi-particle smoke design */
+        .smoke-wisp {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            width: 12px;
+            height: 12px;
+            background: rgba(200, 200, 200, 0.5);
+            border-radius: 50%;
+            filter: blur(5px);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        /* Smoke drifts up, expands, and sways left/right */
+        @keyframes driftUp {
+            0% { transform: translate(-50%, 0) scale(1); opacity: 0.8; }
+            50% { transform: translate(calc(-50% - 15px), -60px) scale(3); opacity: 0.4; }
+            100% { transform: translate(calc(-50% + 20px), -120px) scale(6); opacity: 0; }
+        }
+        /* --- CAKE SLIDE --- */
+        /* --- CAKE SLIDE (Realistic Physics Upgrade) --- */
+        #cake-container {
+            position: relative;
+            width: 250px;
+            height: 250px;
+            margin-top: 20px;
+            cursor: pointer;
+            perspective: 1000px; /* Adds 3D depth for the falling halves */
+        }
+        
+        .cake-half {
+            position: absolute;
+            width: 125px;
+            height: 250px;
+            background-image: url('https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=250&q=80'); 
+            background-size: 250px 250px;
+            background-repeat: no-repeat;
+            /* Heavy, bouncy physics curve to simulate real cake weight */
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 1.2s ease;
+            filter: drop-shadow(0 20px 20px rgba(0,0,0,0.5));
+            transform-origin: bottom center; /* Makes it fall over from the base */
+        }
+        
+        .left-half {
+            left: 0;
+            background-position: left center;
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+        }
+        
+        .right-half {
+            right: 0;
+            background-position: right center;
+            border-top-right-radius: 15px;
+            border-bottom-right-radius: 15px;
+        }
+        
+        /* Realistic split: Halves tilt out in 3D and drop darker shadows inside */
+        .cake-cut .left-half { 
+            transform: translateX(-40px) rotateY(-25deg) rotateZ(-10deg); 
+            filter: drop-shadow(-10px 20px 15px rgba(0,0,0,0.6)) brightness(0.85);
+        }
+        .cake-cut .right-half { 
+            transform: translateX(40px) rotateY(25deg) rotateZ(10deg); 
+            filter: drop-shadow(10px 20px 15px rgba(0,0,0,0.6)) brightness(0.85);
+        }
+
+        /* Improved Knife with drop shadow */
+        #knife-animator {
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            font-size: 4.5rem; 
+            transform: translateX(-50%) rotate(180deg); /* Points the knife down */
+            opacity: 0;
+            pointer-events: none;
+            z-index: 50;
+            filter: drop-shadow(-5px 10px 5px rgba(0,0,0,0.5));
+        }
+
+        /* Slicing Animation: Goes down, saws left and right, then exits */
+        @keyframes realisticSlice {
+            0% { top: -100px; opacity: 0; transform: translateX(-50%) rotate(180deg); }
+            15% { top: -20px; opacity: 1; transform: translateX(-50%) rotate(180deg); } 
+            30% { top: 30px; transform: translateX(-55%) rotate(175deg); } /* Saw left */
+            45% { top: 80px; transform: translateX(-45%) rotate(185deg); } /* Saw right */
+            60% { top: 130px; transform: translateX(-55%) rotate(175deg); } /* Saw left */
+            75% { top: 180px; transform: translateX(-50%) rotate(180deg); } /* Hits bottom */
+            100% { top: 350px; opacity: 0; transform: translateX(-50%) rotate(180deg); } /* Drops out of frame */
+        }
+        
+        /* Realistic Cake Crumbs */
+        .crumb {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #5c3a21; /* Dark chocolate cake color */
+            border-radius: 50%;
+            opacity: 0;
+            z-index: 40;
+            top: 50%;
+            left: 50%;
+            pointer-events: none;
+        }
+
+        /* --- BALLOON SLIDE --- */
+        #balloon-area {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .pop-balloon {
+            position: absolute;
+            font-size: 4rem;
+            cursor: crosshair; /* Target cursor */
+            pointer-events: auto;
+            animation: floatUp linear forwards;
+            transition: transform 0.1s;
+            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.3));
+        }
+        .pop-balloon:active { transform: scale(0.9); } /* Shrinks slightly when clicked */
+        
+        .popped {
+            animation: popExplode 0.3s forwards !important;
+            pointer-events: none;
+        }
+
+        @keyframes floatUp {
+            from { transform: translateY(110vh) rotate(-10deg); }
+            to { transform: translateY(-20vh) rotate(10deg); }
+        }
+        @keyframes popExplode {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; filter: hue-rotate(90deg); }
+            100% { transform: scale(0); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <audio id="song1" loop>
+        <source src="https://github.com/Cyberboy408/..j/raw/refs/heads/main/darkhaast-full-video-song-shivaay-arijit-singh-sunidhi-chauhan-aja_ERflzmha.mp3" type="audio/mpeg"> 
+    </audio>
+    <audio id="song2" loop>
+        <source src="https://github.com/Cyberboy408/..j/raw/refs/heads/main/lyrical-photo-song-luka-chuppi-kartik-aaryan-kriti-sanon-karan-s_JXm97Ohv.mp3" type="audio/mpeg"> 
+    </audio>
+    <audio id="pop-sound">
+        <source src="https://github.com/Cyberboy408/..j/raw/refs/heads/main/universfield-balloon-burst-383750.mp3" type="audio/mpeg"> 
+    </audio>
+
+    <div id="falling-objects"></div>
+
+    <div id="falling-objects"></div>
+
+    <div id="slide1" class="slide active">
+        <div class="glass-card">
+            <h1 class="realistic-heading">Happy Birthday!</h1>
+            <p style="font-size: 1.2rem; margin-bottom: 30px; letter-spacing: 2px;">TO THE MOST AMAZING PERSON</p>
+            <button class="btn" onclick="goToSlide(2)">Click for more love ❤️</button>
+        </div>
+    </div>
+
+    <div id="slide2" class="slide">
+        <div class="glass-card">
+            <p class="quote">"Thodi si jhagralu ho, har baat pe lad jaati ho,<br>
+Par usi andaaz se sabka dil jeet jaati ho.<br>
+Gussa bhi tumhara ek pyaari si ada hai,<br>
+Dil se jo pyaar karo, wahi tumhari wafa hai.<br>
+Apne wale se ladna bhi tumhara pyaar dikhata hai,<br>
+Aur har pal uska khayal rakhna sab kuch batata hai.<br>
+Dua hai ki muskurahat kabhi kam na ho tumhari,<br>
+Har din ho khubsurat, har raat ho pyaari.<br>
+Aisi hi rehna tum, thodi si nakhre waali,<br>
+Par sabse zyada loving aur caring waali <br>
+Aaj is khaas din mauke pe apko kuch kehna tha to khol ke rakhiye apne kaan<br>
+Wishing you the most happiest b'day my jaan"</p>
+            <h2 style="margin-bottom: 10px; font-weight: 300;">Click Yes for a surprise...</h2>
+            <p style="font-size: 0.9rem; margin-bottom: 20px; color: #ff8e8b;">(I dare you, you can't click no 😉)</p>
+            
+            <div style="position: relative; width: 100%; height: 100px; display: flex; justify-content: center; align-items: center; gap: 20px;">
+                <button class="btn" onclick="goToSlide(3)">YES! 💖</button>
+                <button class="btn btn-outline" id="no-btn" style="position: absolute;">NO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="slide3" class="slide">
+        <h1 class="realistic-heading" style="font-size: 4rem;">Make a Wish...</h1>
+        <p style="margin-bottom: 40px; font-weight: 300;">Close your eyes, make a wish, and tap the flame to blow it out 🌬️</p>
+        
+        <div class="candle-container" id="candle-scene">
+            <div class="candle-glow" id="glow"></div>
+            <div class="candle">
+                <div class="wick"></div>
+                <div class="flame" id="flame"></div>
+                <div class="smoke" id="smoke"></div>
+            </div>
+        </div>
+        
+        <button id="candle-next-btn" class="btn" onclick="goToSlide(4)" style="display:none; margin-top: 60px; z-index: 10;">Cut the Cake 🎂</button>
+    </div>
+
+    <div id="slide4" class="slide">
+        <h1 class="realistic-heading" style="font-size: 4rem;">Make a Wish!</h1>
+        <p style="margin-bottom: 20px; font-weight: 300;">Tap the cake to cut it with the knife 🎂</p>
+        
+        <div id="cake-container">
+            <div class="cake-half left-half"></div>
+            <div class="cake-half right-half"></div>
+            <div id="knife-animator">🔪</div>
+        </div>
+        
+        <button id="cake-next-btn" class="btn" onclick="goToSlide(5)" style="display:none; margin-top: 50px;">Next Surprise 🎈</button>
+    </div>
+
+    <div id="slide5" class="slide">
+        <h1 class="realistic-heading" style="font-size: 3rem;">Pop 10 Balloons!</h1>
+        <p id="balloon-score" style="margin-bottom: 20px; font-size: 1.2rem;">Balloons Popped: 0 / 10</p>
+        
+        <div id="balloon-area"></div>
+        
+        <button id="balloon-next-btn" class="btn" onclick="goToSlide(6)" style="display:none; z-index: 100;">See Your Photos 💖</button>
+    </div>
+
+    <div id="slide6" class="slide">
+        <h1 class="realistic-heading" style="font-size: 4rem;">Happy Birthday,...</h1>
+        <p style="margin-bottom: 20px; font-weight: 300;">Click on the photo to see a special message!</p>
+        
+        <div class="carousel-container">
+            <div class="carousel">
+                
+                <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-image: url('https://raw.githubusercontent.com/Cyberboy408/..j/refs/heads/main/IMG_20260503_225355_219.jpg');"></div>
+                        <div class="flip-card-back">
+                            <p>Are you a camera? Because every time I look at you, I smile. 😏✨</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-image: url('https://raw.githubusercontent.com/Cyberboy408/..j/refs/heads/main/IMG_20260503_121150_909.jpg');"></div>
+                        <div class="flip-card-back">
+                            <p>Do you have a map? I just keep getting lost in your eyes. 🗺️💫</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-image: url('https://raw.githubusercontent.com/Cyberboy408/..j/refs/heads/main/IMG_20260504_032719.jpg');"></div>
+                        <div class="flip-card-back">
+                            <p>I must be a snowflake, because I've completely fallen for you. ❄️❤️</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-image: url('https://raw.githubusercontent.com/Cyberboy408/..j/refs/heads/main/IMG_20260402_195143_771%5B1%5D.jpg');"></div>
+                        <div class="flip-card-back">
+                            <p>I didn't believe in magic until I met you. 🪄😉</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-image: url('https://raw.githubusercontent.com/Cyberboy408/..j/refs/heads/main/IMG_20260503_121748_182.jpg');"></div>
+                        <div class="flip-card-back">
+                            <p>You make my heart skip a beat every single day. 💓</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flip-card" onclick="this.querySelector('.flip-card-inner').classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <div class="flip-card-front" style="background-image: url('https://raw.githubusercontent.com/Cyberboy408/..j/refs/heads/main/IMG_20260503_224952_053.jpg');"></div>
+                        <div class="flip-card-back">
+                            <p>I can't wait to make a million more memories with you. 🥰</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. Realistic Falling Objects Logic ---
+        const objectsContainer = document.getElementById('falling-objects');
+        // We use emojis and give them a realistic CSS drop shadow to look 3D
+        const items = ['🎈', '✨', '💖', '🎁', '🎉']; 
+
+        function createFallingObject() {
+            const el = document.createElement('div');
+            el.classList.add('falling-object');
+            el.innerText = items[Math.floor(Math.random() * items.length)];
+            
+            // Random horizontal position
+            el.style.left = Math.random() * 100 + 'vw';
+            
+            // Random fall speed between 4 and 8 seconds
+            const duration = Math.random() * 4 + 4;
+            el.style.animationDuration = duration + 's';
+            
+            // Random sizes
+            el.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem';
+            
+            objectsContainer.appendChild(el);
+            
+            // Remove the element after it falls to prevent lag
+            setTimeout(() => {
+                el.remove();
+            }, duration * 1000);
+        }
+
+        // Drop a new object every 300 milliseconds
+        setInterval(createFallingObject, 300);
+
+
+        // --- 2. Slide Transitions ---
+        // --- 2. Updated Slide Transitions ---
+        // --- 2. Updated Slide Transitions ---
+        // --- 2. Updated Slide Transitions ---
+        // --- 2. Updated Slide Transitions ---
+        let balloonInterval;
+
+        function goToSlide(slideNumber) {
+            document.querySelectorAll('.slide').forEach(slide => {
+                slide.classList.remove('active');
+            });
+            document.getElementById('slide' + slideNumber).classList.add('active');
+
+            // Slide 5 is now the Balloons Game
+            if(slideNumber === 5) {
+                balloonInterval = setInterval(spawnPopBalloon, 500);
+            }
+
+            // Slide 6 is now the final Photos slide
+            if(slideNumber === 6) {
+                setInterval(createFallingObject, 150);
+                document.getElementById('song1').pause();
+                const song2 = document.getElementById('song2');
+                song2.play();
+                song2.volume = 0.5; 
+            }
+        }
+
+        // --- 3.5 Blow Out The Candle Logic ---
+        // --- 3.5 Blow Out The Candle Logic (FOOLPROOF FIX) ---
+        const flame = document.getElementById('flame');
+        const glow = document.getElementById('glow');
+        const candleScene = document.getElementById('candle-scene'); // The entire candle box
+        let isBlownOut = false;
+
+        function blowOutCandle(e) {
+            // Prevent double-firing on mobile
+            if (e.cancelable) e.preventDefault(); 
+            
+            if (!isBlownOut) {
+                isBlownOut = true;
+                
+                // 1. Extinguish the Flame & Glow
+                flame.style.transform = 'translateX(-50%) scale(0)';
+                flame.style.opacity = '0';
+                glow.style.opacity = '0';
+                
+                // 2. Make the background dark
+                document.body.style.background = 'radial-gradient(circle at center, #0a0412 0%, #000000 100%)';
+                
+                // 3. Generate Smoke Wisps
+                for(let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        let wisp = document.createElement('div');
+                        wisp.classList.add('smoke-wisp');
+                        candleScene.appendChild(wisp);
+                        
+                        let swayDir = Math.random() > 0.5 ? 1 : -1;
+                        wisp.style.animation = `driftUp ${2 + Math.random()}s ease-out forwards`;
+                        wisp.style.marginLeft = `${swayDir * (Math.random() * 10)}px`;
+                        
+                        setTimeout(() => wisp.remove(), 3000);
+                    }, i * 200); 
+                }
+                
+                // 4. Show the Next Button
+                setTimeout(() => {
+                    document.getElementById('candle-next-btn').style.display = 'inline-block';
+                }, 2000);
+            }
+        }
+
+        // BIG CHANGE: Attach the click to the whole scene, not just the flame!
+        candleScene.addEventListener('mousedown', blowOutCandle);
+        candleScene.addEventListener('touchstart', blowOutCandle);
+
+        // --- 4. Cake Cutting Logic ---
+        // --- 4. Cake Cutting Logic (Realistic Upgrade) ---
+        const cakeContainer = document.getElementById('cake-container');
+        const knifeAnimator = document.getElementById('knife-animator');
+        let isCakeCut = false;
+
+        cakeContainer.addEventListener('click', () => {
+            if (!isCakeCut) {
+                isCakeCut = true;
+                
+                // 1. Trigger the realistic sawing animation (takes 1.5 seconds)
+                knifeAnimator.style.animation = "realisticSlice 1.5s ease-in-out forwards";
+                
+                // 2. Wait exactly until the knife reaches the bottom (1000ms), then split the cake
+                setTimeout(() => {
+                    cakeContainer.classList.add('cake-cut');
+                    
+                    // 3. Generate flying cake crumbs!
+                    for(let i = 0; i < 20; i++) {
+                        let crumb = document.createElement('div');
+                        crumb.classList.add('crumb');
+                        cakeContainer.appendChild(crumb);
+                        
+                        // Calculate random flying directions for each crumb
+                        let angle = Math.random() * Math.PI * 2;
+                        let velocity = 30 + Math.random() * 60; // How far they fly
+                        let tx = Math.cos(angle) * velocity;
+                        let ty = Math.sin(angle) * velocity + 40; // Bias them to fall downward heavily
+                        
+                        crumb.style.transition = 'transform 0.7s ease-out, opacity 0.7s';
+                        
+                        // Small delay so they explode outwards exactly as the cake splits
+                        setTimeout(() => {
+                            crumb.style.opacity = '1';
+                            crumb.style.transform = `translate(calc(-50% + ${tx}px), calc(-50% + ${ty}px)) scale(${Math.random() + 0.5})`;
+                            
+                            // Make crumbs fade into the table
+                            setTimeout(() => crumb.style.opacity = '0', 600);
+                        }, 50);
+                    }
+                    
+                    // Add a magical birthday burst in the middle
+                    const burst = document.createElement('div');
+                    burst.innerHTML = '✨🎂✨';
+                    burst.style.position = 'absolute';
+                    burst.style.top = '50%';
+                    burst.style.left = '50%';
+                    burst.style.transform = 'translate(-50%, -50%) scale(0)';
+                    burst.style.fontSize = '3rem';
+                    burst.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    burst.style.zIndex = '60';
+                    cakeContainer.appendChild(burst);
+                    
+                    setTimeout(() => { burst.style.transform = 'translate(-50%, -50%) scale(1)'; }, 100);
+                    
+                    // Show the NEXT button smoothly after the crumbs settle
+                    setTimeout(() => {
+                        document.getElementById('cake-next-btn').style.display = 'inline-block';
+                    }, 1000);
+
+                }, 1000); // This 1000ms syncs perfectly with the 75% mark of the CSS knife animation
+            }
+        });
+
+        // --- 5. Balloon Popping Game Logic ---
+        let poppedCount = 0;
+        const targetPops = 10;
+        const balloonArea = document.getElementById('balloon-area');
+        const balloonScore = document.getElementById('balloon-score');
+        const balloonDesigns = ['🎈', '💖', '🎁', '⭐', '🎀', '🎉', '🦄'];
+
+        function spawnPopBalloon() {
+            // Only spawn if we are on slide 4 and haven't won yet
+            if(document.getElementById('slide5').classList.contains('active') && poppedCount < targetPops) {
+                const b = document.createElement('div');
+                b.classList.add('pop-balloon');
+                
+                // Pick a random balloon design
+                b.innerText = balloonDesigns[Math.floor(Math.random() * balloonDesigns.length)];
+                
+                // Random position and speed
+                b.style.left = Math.random() * 80 + 10 + 'vw'; 
+                const duration = Math.random() * 3 + 3; // 3 to 6 seconds
+                b.style.animationDuration = duration + 's'; 
+                
+                // When clicked/tapped
+                b.addEventListener('mousedown', popAction);
+                b.addEventListener('touchstart', popAction);
+
+                function popAction(e) {
+                    e.preventDefault(); 
+                    if(!b.classList.contains('popped')) {
+                        b.classList.add('popped');
+                        b.innerText = '💥'; 
+                        
+                        // NEW: Play the pop sound!
+                        const popAudio = document.getElementById('pop-sound');
+                        popAudio.currentTime = 0; // Resets sound instantly so it can play rapidly if she clicks fast
+                        popAudio.play();
+                        
+                        poppedCount++;
+                        balloonScore.innerText = `Balloons Popped: ${poppedCount} / ${targetPops}`;
+                        
+                        // Check for win
+                        if(poppedCount >= targetPops) {
+                            document.getElementById('balloon-next-btn').style.display = 'inline-block';
+                            balloonScore.innerText = "Yayy! You did it! 🎉";
+                            clearInterval(balloonInterval); 
+                        }
+                        
+                        setTimeout(() => b.remove(), 300);
+                    }
+                }
+                
+                balloonArea.appendChild(b);
+                
+                // Cleanup if the balloon floats off screen without being popped
+                setTimeout(() => {
+                    if(b && b.parentNode) b.remove();
+                }, duration * 1000);
+            }
+        }
+
+
+        // --- 3. The "Unclickable No" Button Logic ---
+        // --- 3. The "Unclickable No" Button Logic ---
+        // --- 3. The "Unclickable No" Button Logic (STRICT BOUNDARIES FIX) ---
+        const noBtn = document.getElementById('no-btn');
+        noBtn.style.position = 'relative';
+
+        const moveButton = (e) => {
+            if (e) e.preventDefault(); // Stops mobile screens from scrolling when touched
+            
+            // 1. Force it to attach to the screen window, not the parent container
+            noBtn.style.position = 'fixed'; 
+            
+            // 2. Define a strict padding (safe zone) so it never touches the absolute edge
+            const padding = 30; 
+            
+            // 3. Get the exact width/height of the button (fallback to 100x50 if it glitches)
+            const btnWidth = noBtn.offsetWidth || 100;
+            const btnHeight = noBtn.offsetHeight || 50;
+
+            // 4. Calculate the maximum safe coordinates on the screen
+            const maxX = window.innerWidth - btnWidth - padding;
+            const maxY = window.innerHeight - btnHeight - padding;
+            
+            // Ensure we never get negative numbers on small screens
+            const safeMaxX = Math.max(padding, maxX);
+            const safeMaxY = Math.max(padding, maxY);
+            
+            // 5. Generate random coordinates strictly within the safe box
+            const randomX = Math.floor(Math.random() * (safeMaxX - padding)) + padding;
+            const randomY = Math.floor(Math.random() * (safeMaxY - padding)) + padding;
+            
+            // Apply the new position
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.transition = 'all 0.15s ease-out';
+        };
+
+        // Trigger the movement on hover (computers) and touch (phones)
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton);
+
+        // --- 6. Background Music Logic ---
+        // --- 6. Initial Background Music Logic ---
+        let musicStarted = false;
+
+        const startMusic = () => {
+            // Only start song 1 if music hasn't started AND we haven't reached the last slide yet
+            if (!musicStarted && !document.getElementById('slide6').classList.contains('active')) {
+                const song1 = document.getElementById('song1');
+                song1.play();
+                song1.volume = 0.5; 
+                musicStarted = true;
+            }
+        };
+
+        // Listen for the very first click or tap anywhere on the screen
+        document.body.addEventListener('click', startMusic);
+        document.body.addEventListener('touchstart', startMusic);
+
+    </script>
+</body>
+</html>
